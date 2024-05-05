@@ -20,11 +20,11 @@ class Pet extends Model
     ];
 
     public function user() {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function appointments() {
-        $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class);
     }
 
         // uno a uno polimorfica

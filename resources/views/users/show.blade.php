@@ -13,16 +13,16 @@
                 <p><strong>Apellido:</strong> {{ $user->lastname }}</p>
                 <p><strong>DNI:</strong> {{ $user->id }}</p>
                 <p><strong>Email:</strong> {{ $user->email }}</p>
-                  @foreach ($user->types as $type)
-                <p><strong>Rol de usuario:</strong> 
+                 
+                <p><strong>Roles:</strong> 
+                @foreach ($user->types as $type)
                         @if ($type->pivot->type_id == 1)
-                        'Dueño'
+                        'Dueño' 
                         @else
                     'Veterinario'
                    @endif
                 </p>
                    @endforeach
-                
             </div>
         </div>
     </div>

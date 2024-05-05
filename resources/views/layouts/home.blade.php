@@ -17,8 +17,8 @@
     más avanzada para garantizar el mejor cuidado posible. Explora nuestros servicios, pide cita, conoce a nuestro equipo, 
     y descubre cómo podemos ayudar a tu mascota a llevar una vida feliz y saludable.</p>
       <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-        <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Nuestros Peludos</button>
-        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Veterinarios</button>
+        <a href="{{route('pets.index')}}" class="btn btn-primary btn-lg px-4 gap-3">Nuestros Peludos</a>
+        <a href="{{ route('user.vets') }}" class="btn btn-outline-secondary btn-lg px-4" role="button">Veterinarios</a>
       </div>
     </div>
   </div>

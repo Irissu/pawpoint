@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use Illuminate\Http\Request;
-use App\Models\Pet;
-use App\Models\User;
 
-class PetController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pets = Pet::with('user')->get();
-        return view('pets.index', compact('pets'));
+        $appointments = Appointment::all();
+        return view('appointments.index', compact('appointments'));
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -23,6 +23,7 @@ class PetController extends Controller
     {
         //
     }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -30,23 +31,13 @@ class PetController extends Controller
     {
         //
     }
+
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        $pet = Pet::find($id);
-        return view('pets.show', compact('pet'));
-    }
-
-    public function showDogs() {
-        $dogs = Pet::where('type', 'dog')->get();
-        return view('pets.dogs', compact('dogs'));
-    }
-
-    public function showCats() {
-        $cats = Pet::where('type', 'cat')->get();
-        return view('pets.cats', compact('cats'));
+        //
     }
 
     /**
@@ -54,8 +45,9 @@ class PetController extends Controller
      */
     public function edit(string $id)
     {
-            //
+        //
     }
+
     /**
      * Update the specified resource in storage.
      */
