@@ -5,6 +5,11 @@
 @section('content')
 
 <div class="table-responsive">
+   @if(session('success'))
+        <div class="alert alert-success my-2">
+          {{ session('success') }}
+        </div>
+      @endif
   <table class="table">
     <thead>
       <tr>

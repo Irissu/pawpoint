@@ -18,15 +18,6 @@ class UserController extends Controller
         return view('users.index', compact('users'));
     }
 
-    public function indexVets() {
-      
-
-    }
-
-    public function indexOwners() {
-        
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -57,18 +48,28 @@ class UserController extends Controller
     }
 
     public function showVets() {
-        $vets = User::whereHas('types', function ($query) {
+   /*      $vets = User::whereHas('types', function ($query) {
             $query->where('type_id', 2);
-        })->get();
+        })->get(); */
+
+            $users = User::all();
+            $vets = $users->filter(function($user) {
+                return $user->types->contains('id', 1);
+            });
 
         return view('users.vets', compact('vets'));
     }
 
     public function showOwners() {
-        $owners = User::whereHas('types', function($query) {
-            $query->where('type_id', 1);
+        $owners = User::whereHas('types', function($consulta) {
+            $consulta->where('type_id', 1);
         })->get();
-        
+                /* Otra forma:
+            $users = User::all();
+            $owners = $users->filter(function ($user) {
+                return $user->types->contains('type_id', 1);
+            });  
+            */
         return view('users.owners', compact('owners'));
     }
 

@@ -9,7 +9,6 @@
     
         <table class="table">
             <thead>
-                <th scope="col">Avatar</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Raza</th>
                 <th scope="col">Peso</th>
@@ -19,13 +18,11 @@
         <tbody class="table-group-divider">
            @foreach ($dogs as $dog)
             <tr>
-                <td>Imagen</td>
-                <td>{{ $dog->name }}</td>
                 <td>{{ $dog->name }}</td>
                 <td>{{ $dog->breed }}</td>
                 <td>{{ $dog->weight }}</td>
                 <td>{{ $dog->age }}</td>
-                <td>Dueño</td>
+                <td>{{ $dog->user->name}}</td>
             </tr>
             @endforeach
     </tbody>

@@ -24,13 +24,12 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">PEDIR CITA</a></li>
-            <li><hr class="dropdown-divider"></li>
             <!-- estas dos secciones, solo accesibles para usuarios autenticados con el type '1' o 'owner'. 
             Deberia ser: si el usuario está autenticado y si en la tabla type_user el usuario tiene el type_id 1  -->
-            @if (Auth::check() && Auth::user()->type_id == 1)
+            <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">MIS CITAS</a></li>
-            <li><a class="dropdown-item" href="#">GESTION CITAS</a></li>
-            @endif
+            <li><a class="dropdown-item" href="{{ route('appointments.index')}}">GESTION CITAS</a></li>
+          
           </ul>
         </li>
         
@@ -44,8 +43,8 @@
             <li><a class="dropdown-item" href="{{ route('pets.dogs') }}">PERROS</a></li>
             <li><a class="dropdown-item" href="{{ route('pets.cats') }}">GATOS</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">MIS MASCOTAS</a></li>
-            <li><a class="dropdown-item" href="#">REGISTRAR MASCOTA</a></li>
+            <li><a class="dropdown-item" href="{{ route('pets.mypets' )}}">MIS MASCOTAS</a></li>
+            <li><a class="dropdown-item" href="{{ route('pets.create') }}">REGISTRAR MASCOTA</a></li>
           </ul>
         </li>
         @guest
@@ -62,19 +61,15 @@
   </div>
 </nav>
     
-    
-
-
-           
     <!-- icono de usuario, solo visible si usuario autenticado-->
 
     @if (Auth::check())
-    <a href="#" class="text-white me-3" style="text-decoration: none;">{{ Auth::user()->name }}</a>
-    <i class="bi bi-person-circle text-white me-3 " style="font-size: 1.7rem; " ></i>
-    <form method="POST" action="{{ route('logout') }}">
+    <a href="{{ route('users.show', Auth::user()->id) }}" class="text-white m-auto p-3" style="text-decoration: none;">{{ Auth::user()->name }}</a>
+    <a href="{{ route('users.show', Auth::user()->id) }}" class="m-auto"><i class="bi bi-person-circle text-white m-auto "style="font-size: 1.7rem; " ></i></a>
+    <form method="POST" action="{{ route('logout') }}" class="m-auto">
               @csrf
                 <button type="submit" style="background: none; border: none;">
-                <i class="bi bi-box-arrow-right text-white me-3" style="font-size: 1.7rem;"></i>
+                <i class="bi bi-box-arrow-right text-white m-auto p-3" style="font-size: 1.7rem;"></i>
                 </button>
     </form>
 

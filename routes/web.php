@@ -4,6 +4,7 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Models\Appointment;
 use Illuminate\Support\Facades\Route;
 use App\Models\Pet;
 
@@ -34,30 +35,45 @@ Route::get('/login', function () {
 Route::get('/registro', function () {
     return view('auth.register');
 })->name('registro');
+
+Route::get('/notauthorized', function () {
+    return view('users.notauthorized');
+})->name('notauthorized');
+
 // ruta para loguearse
 Route::post('/login', [AuthController::class, 'login'])->name('logins');
 // ruta para registrarse
 Route::post('/registro', [AuthController::class, 'register'])->name('registros');
 // ruta para desloguearse
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::get('/', function () {
     return view('layouts.home');
 })->name('home');
 
 // Pets Routes
+
+
+Route::get('pets/create/', [PetController::class, 'create'])->name('pets.create')->middleware('checkowner');
 Route::get('/mascotas/perros', [PetController::class, 'showDogs'])->name('pets.dogs');
 Route::get('/mascotas/gatos', [PetController::class, 'showCats'])->name('pets.cats');
-Route::get('/mascotas', [PetController::class, 'index'])->name('pets.index');
+Route::get('/mismascotas', [PetController::class, 'showMyPets'])->name('pets.mypets')->middleware('checkowner');
+Route::resource('pets', PetController::class)->except('create');
+
+/* Route::get('/mascotas', [PetController::class, 'index'])->name('pets.index');
 Route::get('/mascotas/{pet}', [PetController::class, 'show'])->name('pets.show');
 Route::get('/mascotas/create', [PetController::class, 'create'])->name('pets.create');
+Route::post('/mascotas', [PetController::class, 'store'])->name('pets.store'); */
 
 // Users Routes
 Route::get('users/vets', [UserController::class, 'showVets'])->name('user.vets');
 Route::resource('users', UserController::class);
 
 // Appointments Routes
-Route::resource('appointments', AppointmentController::class);
+Route::resource('appointments', AppointmentController::class)->except('index', 'edit', 'update', 'destroy');
+Route::middleware(['checkvet'])->group(function () {
+    Route::resource('appointments', AppointmentController::class)->only(['index', 'edit', 'update', 'destroy']);
+});
 
 
 /*  es posible usar resource y aún así aplicar middleware a rutas específicas,

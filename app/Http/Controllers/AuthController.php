@@ -12,16 +12,18 @@ class AuthController extends Controller
 {
     public function register(Request $request) {
         
-        //validacion:
+        //validacion: 
         $rules =  [
             'id' => 'required|regex:/[0-9]{8}[A-Za-z]{1}/',
             'name' => 'required|min:3|max:50',
             'lastname' => 'required|min:3|max:50',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8', 
+            'type_id' => 'required'
         ];
         $error_messages = [
             'id.required' => 'El id es obligatorio',
+            'id.regex' => 'El formato del DNI es inválido',
             'name.required' => 'el nombre es obligatorio',
             'name.min' => 'el nombre debe tener al menos 3 letras',
             'name.max' => 'el nombre debe tener máximo 50 letras',
@@ -29,7 +31,8 @@ class AuthController extends Controller
             'email.email' => 'el formato del email no es correcto',
             'email.unique' => 'el email ya pertenece a otro usuario',
             'password.required' => 'el password es obligatorio',
-            'password.min' => 'el password debe tener al menos 8 caracteres'
+            'password.min' => 'el password debe tener al menos 8 caracteres',
+            'type_id' => 'Debes escoger un tipo de usuario'
         ];
         // se validan los datos del formulario, si no son correctos, validate lanza una excepcion y se redirige a la pagina anterior con los errores almacenados en la variable $errors
         $request->validate($rules, $error_messages);
@@ -42,8 +45,9 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->email_verified_at = now();
         $user->password = Hash::make($request->password);
-
         $user->save();
+
+        $user->types()->attach($request->type_id);
 
         Auth::login($user); //me loguea automaticamente tras el registro, si este ha sido correcto
         return redirect(route('home')); //podria redirigir al perfil privado del usuario "privada"
@@ -75,13 +79,11 @@ class AuthController extends Controller
             ->withErrors($validator->errors());
         }
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('home');
+            return redirect(route('home'));
         }
 
         // si falla autenticacion redirijo con mensaje
         return redirect()->back()->withErrors(['email' => 'credenciales incorrectas']);
-
-            
     }
 
     public function logout(Request $request) {

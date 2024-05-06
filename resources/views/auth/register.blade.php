@@ -63,6 +63,16 @@
             <div class="form-style">
                 <form method="post" action=" {{ route('registros') }}">
                     @csrf
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error) 
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+
+                    @endif
                     <div class="form-group pb-3">
                         <input type="text" name="id" placeholder="DNI" class="form-control" id="dniInput" required>
                     </div>
@@ -81,6 +91,14 @@
 
                     <div class="form-group pb-3">
                         <input type="password" name="password" placeholder="Contraseña" class="form-control" id="exampleInputPassword1" required>
+                    </div>
+
+                    <div class="form-group pb-3">
+                      <select name="type_id" id="type_id" class="form-control" value="{{ old('type_id') }}" required>
+                         <option value="">Tipo de Usuario</option>
+                         <option value="1">Dueño</option>
+                         <option value="2">Veterinario</option>
+                      </select>
                     </div>
 
                     <div class="d-flex align-items-center justify-content-between">
