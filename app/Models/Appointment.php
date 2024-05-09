@@ -16,6 +16,6 @@ class Appointment extends Model
     ];
 
     public function pet() {
-        $this->belongsTo(Pet::class);
+        return $this->belongsTo(Pet::class);
     }
 }

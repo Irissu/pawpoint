@@ -27,6 +27,10 @@ use App\Models\Pet;
 
 // Login and Register Routes
 
+
+
+
+
 //vista login
 Route::get('/login', function () {
     return view('auth.login');
@@ -70,11 +74,16 @@ Route::get('users/vets', [UserController::class, 'showVets'])->name('user.vets')
 Route::resource('users', UserController::class);
 
 // Appointments Routes
-Route::resource('appointments', AppointmentController::class)->except('index', 'edit', 'update', 'destroy');
-Route::middleware(['checkvet'])->group(function () {
-    Route::resource('appointments', AppointmentController::class)->only(['index', 'edit', 'update', 'destroy']);
-});
 
+
+
+
+
+Route::middleware(['checkvet'])->group(function () { // aqui van todas las rutas que solo pueden ser accedidas por veterinarios.
+Route::get('appointments/report', [AppointmentController::class, 'downloadPDF'])->name('appointments.report');
+Route::resource('appointments', AppointmentController::class)->only(['index', 'edit', 'update', 'destroy', 'downloadPDF']);
+});
+Route::resource('appointments', AppointmentController::class)->except('index', 'edit', 'update', 'destroy', 'downloadPDF');
 
 /*  es posible usar resource y aún así aplicar middleware a rutas específicas,
 En este ejemplo, las rutas index y show están disponibles para todos los usuarios,

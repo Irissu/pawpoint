@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AppointmentController extends Controller
 {
@@ -37,7 +38,8 @@ class AppointmentController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $appointment = Appointment::find($id);
+        return view('appointments.show', compact('appointment'));
     }
 
     /**
@@ -62,5 +64,13 @@ class AppointmentController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function downloadPDF() {
+
+    $appointments = Appointment::all();
+
+    $pdf = Pdf::loadView('appointments.report', compact('appointments'));
+    return $pdf->stream('appointments.pdf');
     }
 }

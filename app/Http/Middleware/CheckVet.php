@@ -21,6 +21,5 @@ class CheckVet
         } else {
             return redirect(route('notauthorized'));
         }
-        
     }
 }
