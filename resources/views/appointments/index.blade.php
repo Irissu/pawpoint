@@ -5,6 +5,18 @@
 @section('content')
 <div class="table my-5">
     <h1>Lista de Citas</h1>
+    @if (session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
+
+    @if (session('warning'))
+        <div class="alert alert-warning">{{ session('warning') }}</div>
+    @endif
+
 <table class="table-responsive-xl">
   <thead>
     <tr>

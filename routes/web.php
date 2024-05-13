@@ -4,6 +4,7 @@ use App\Http\Controllers\PetController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ConsumeController;
 use App\Models\Appointment;
 use Illuminate\Support\Facades\Route;
 use App\Models\Pet;
@@ -62,7 +63,9 @@ Route::get('pets/create/', [PetController::class, 'create'])->name('pets.create'
 Route::get('/mascotas/perros', [PetController::class, 'showDogs'])->name('pets.dogs');
 Route::get('/mascotas/gatos', [PetController::class, 'showCats'])->name('pets.cats');
 Route::get('/mismascotas', [PetController::class, 'showMyPets'])->name('pets.mypets')->middleware('checkowner');
+Route::get('pets/{id}/edit', [PetController::class, 'edit'])->name('pets.edit');
 Route::resource('pets', PetController::class)->except('create');
+
 
 /* Route::get('/mascotas', [PetController::class, 'index'])->name('pets.index');
 Route::get('/mascotas/{pet}', [PetController::class, 'show'])->name('pets.show');
@@ -71,19 +74,31 @@ Route::post('/mascotas', [PetController::class, 'store'])->name('pets.store'); *
 
 // Users Routes
 Route::get('users/vets', [UserController::class, 'showVets'])->name('user.vets');
+Route::get('users/owners', [UserController::class, 'showOwners'])->name('user.owners');
 Route::resource('users', UserController::class);
 
 // Appointments Routes
-
-
-
-
-
-Route::middleware(['checkvet'])->group(function () { // aqui van todas las rutas que solo pueden ser accedidas por veterinarios.
-Route::get('appointments/report', [AppointmentController::class, 'downloadPDF'])->name('appointments.report');
-Route::resource('appointments', AppointmentController::class)->only(['index', 'edit', 'update', 'destroy', 'downloadPDF']);
+// Rutas que solo pueden ser accedidas por dueños de mascotas
+Route::middleware(['checkowner'])->group(function () { 
+    Route::get('/appointments/create', [AppointmentController::class, 'create'])->name('appointments.create');
+    Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+    Route::get('/appointments/checkmyappoint', [AppointmentController::class, 'checkMyAppointments'])->name('appointments.checkmyappoint');
 });
-Route::resource('appointments', AppointmentController::class)->except('index', 'edit', 'update', 'destroy', 'downloadPDF');
+
+
+// aqui van todas las rutas que solo pueden ser accedidas por veterinarios.
+Route::middleware(['checkvet'])->group(function () { 
+    Route::get('appointments/report', [AppointmentController::class, 'downloadPDF'])->name('appointments.report');
+    Route::resource('appointments', AppointmentController::class)->only(['index', 'edit', 'update', 'destroy', 'downloadPDF']);
+});
+//rutas que no tienen el middleware 'checkvet', ni 'checkowner" accesibles para cualquier usuario
+Route::resource('appointments', AppointmentController::class)->except('index', 'edit', 'update', 'destroy', 'downloadPDF', 'store', 'create');
+
+
+// Rutas para consumir API externas
+Route::get('apipruebas/starkquotes', [ConsumeController::class, 'checkQuoteByLastName'])->name('apipruebas.quotes');
+Route::get('apipruebas', [ConsumeController::class, 'checkGOTHouses'])->name('apipruebas.index');
+
 
 /*  es posible usar resource y aún así aplicar middleware a rutas específicas,
 En este ejemplo, las rutas index y show están disponibles para todos los usuarios,
@@ -98,3 +113,6 @@ Route::resource('mascotas', PetController::class)->only([
     'create', 'store', 'edit', 'update', 'destroy'
 ])->middleware('auth');
  */
+
+ 
+/* Route::get('/avatar', 'UserController@giveMeAnAvatar'); */

@@ -7,7 +7,8 @@
 
 
     <div class="px-4 py-5 my-5 text-center">
-    <img class="d-block mx-auto mb-3" src="/../pawpoint/public/assets/logo-paw-color3.svg" alt="" width="112" height="112">
+    <img class="d-block mx-auto mb-3" src="../assets/logo-paw-color3.svg" alt="" width="112" height="112">
+  
     <h1 class="display-5 fw-bold text-body-emphasis">Cuidado y Amor para Tu Mascota</h1>
     <div class="col-lg-10 mx-auto">
       <p class="lead mb-4">Bienvenidos a <strong>Clínica PawPoint</strong>, el lugar donde la salud y el bienestar de tus mascotas

@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Type;
-
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use App\Models\Image;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
@@ -39,6 +41,27 @@ class UserFactory extends Factory
             );
         });
     }
+
+    public function withAvatar(): Factory|UserFactory  {
+        return $this->afterCreating(function (User $user) {
+            $url = "https://ui-avatars.com/api/?name=" . $user->name;
+            $contents = Http::get($url)->body();
+            $name = Str::random(10) . '.png'; // random name
+            Storage::disk('public')->put($name, $contents);
+           
+            // Crear una nueva imagen y guardarla en la base de datos
+            $image = new Image;
+            $image->name = $name;
+            $image->url = Storage::url($name);
+            $image->imageable_id = $user->id;
+            $image->imageable_type = User::class;
+            $image->save();
+
+            $user->update(['image' => $name]);
+            });
+    }
+
+    
       /**
      * Indicate that the model's email address should be unverified.
      *

@@ -19,8 +19,6 @@ return new class extends Migration
 
             $table->foreignId('pet_id')->references('id')->on('pets')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
-
-            
         });
     }
 

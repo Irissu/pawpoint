@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\UserController as APIUserController;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 
 class UserController extends Controller
@@ -15,7 +17,11 @@ class UserController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        return view('users.index', compact('users'));
+
+        $userController = new APIUserController;
+        $avatarUrl = $userController->giveMeAnAvatar();
+
+        return view('users.index', compact('users', 'avatarUrl'));
     }
 
     /**
@@ -23,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('auth.register');
     }
 
     /**
@@ -31,45 +37,45 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // esta funcion la tengo realmente en register, ya que es la que se encarga de crear un nuevo usuario
     }
 
     /**
      * Display the specified resource.
      */
-/*     public function show($id)
-    {
-     $user = User::find($id);
-     return view('users.show', compact('user'));   
-    } */
+
     public function show($id) {
      $user = User::find($id);
      return view('users.show', compact('user'));   
     }
 
     public function showVets() {
-   /*      $vets = User::whereHas('types', function ($query) {
+   /*      
+            otra forma, con whereHas:
+            $vets = User::whereHas('types', function ($query) {
             $query->where('type_id', 2);
         })->get(); */
 
             $users = User::all();
             $vets = $users->filter(function($user) {
-                return $user->types->contains('id', 1);
+                return $user->types->contains('id', 2);
             });
 
         return view('users.vets', compact('vets'));
     }
 
     public function showOwners() {
-        $owners = User::whereHas('types', function($consulta) {
-            $consulta->where('type_id', 1);
+        $owners = User::with('image')->whereHas('types', function($user) {
+            $user->where('type_id', 1);
         })->get();
-                /* Otra forma:
+                /* Otra forma, con filter:
             $users = User::all();
             $owners = $users->filter(function ($user) {
                 return $user->types->contains('type_id', 1);
             });  
             */
+            
+    
         return view('users.owners', compact('owners'));
     }
 
@@ -84,8 +90,8 @@ class UserController extends Controller
         */
     }
 
-/*     public function showMyPets() {
-        User::where('pets', function ($query) {
+/*     public function showMyPets() { Forma un poco mas compleja de hacerlo. 
+        User::where('pets', function ($query) {  
             $query->where('type', 2);
         });
     }
@@ -114,7 +120,6 @@ class UserController extends Controller
         $user = User::find($id); //findOrFail es parecido pero devuelve 404 si no encuentra al user
         $user->delete();
         return redirect()->route('users.index')->with('success', 'Usuario borrado correctamente');
-     
-    
     }
+
 }

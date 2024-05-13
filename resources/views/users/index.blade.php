@@ -16,7 +16,7 @@
   <tbody class="table-group-divider">
     @foreach ($users as $user)
         <tr>
-            <td>Image</td>
+            <td><img src="{{ $avatarUrl }}" alt="Avatar"></td>
             <td>{{ $user->name . ' ' . $user->lastname }}</td>
             <td>{{ $user->email }}</td>
             <td>

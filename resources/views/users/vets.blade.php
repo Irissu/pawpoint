@@ -16,7 +16,7 @@
   <tbody class="table-group-divider">
     @foreach ($vets as $vet)
         <tr>
-            <td>Image</td>
+            <td><img src="{{ $vet->generateRandomAvatar() }}" alt="Avatar"></td>
             <td>{{ $vet->name . ' ' . $vet->lastname }}</td>
             <td>{{ $vet->email }}</td>
             <td>

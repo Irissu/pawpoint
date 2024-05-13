@@ -25,7 +25,9 @@
                 <td>{{ $pet->breed }}</td>
                 <td>{{ $pet->weight }} kg</td>
                 <td>{{ $pet->age }} años</td>
-                <td><a href="{{ route('pets.show', $pet->id) }}" class="btn btn-primary"><i class="bi bi-eye"></i></a></td>
+                <td><a href="{{ route('pets.show', $pet->id) }}" class="btn btn-primary"><i class="bi bi-eye"></i></a>
+                <a href="{{ route('pets.edit', $pet->id) }}" class="btn btn-warning" ><i class="bi bi-pencil"></i></a>
+                </td>
             </tr>
             @endforeach
             @endif

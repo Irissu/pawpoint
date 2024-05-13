@@ -16,11 +16,10 @@ class CheckOwner
     public function handle(Request $request, Closure $next): Response
     {
 
-        if(auth()->user() && auth()->user()->types->contains('id', 1)) {
+        if (auth()->user() && auth()->user()->types->contains('id', 1)) {
             return $next($request);
         } else {
             return redirect(route('notauthorized'));
         }
-        
     }
 }

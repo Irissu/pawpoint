@@ -3,7 +3,7 @@
   <div class="container-fluid d-flex align-items-center justify-content-between px-4 py-1" style="background-color: rgb(26, 188, 156);">
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
       <a class="navbar-brand mb-0 h1" href="{{ route('home') }}" >
-        <img src="/../pawpoint/public/assets/logo-paw-white.svg" alt="logo" class="img-fluid me-2" alt="..." style="width: auto; height: 50px;"> 
+        <img src="../assets/logo-paw-white.svg" alt="logo" class="img-fluid me-2" alt="..." style="width: auto; height: 50px;"> 
         PAWPOINT
       </a>
     </nav>
@@ -23,18 +23,16 @@
             CITAS
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">PEDIR CITA</a></li>
+            <li><a class="dropdown-item" href="{{ route('appointments.create')}}">PEDIR CITA</a></li>
             <!-- estas dos secciones, solo accesibles para usuarios autenticados con el type '1' o 'owner'. 
             Deberia ser: si el usuario está autenticado y si en la tabla type_user el usuario tiene el type_id 1  -->
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">MIS CITAS</a></li>
+            <li><a class="dropdown-item" href="{{ route('appointments.checkmyappoint')}}">MIS CITAS</a></li>
             <li><a class="dropdown-item" href="{{ route('appointments.index')}}">GESTION CITAS</a></li>
           
           </ul>
         </li>
         
-
-
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             MASCOTAS

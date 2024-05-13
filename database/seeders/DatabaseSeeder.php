@@ -19,12 +19,13 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
+        //     'email' => 'test@example.com' ,
         // ]);
 
         $this->call(TypeSeeder::class);
-        User::factory(20)->create();
+        User::factory(20)->create(); 
         Pet::factory(10)->create();
+        $this->call(ImageSeeder::class);
         Appointment::factory(20)->create();
     }
 }

@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Pet;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\Storelogs;
 
 class PetController extends Controller
 {
+    use Storelogs;
     /**
      * Display a listing of the resource.
      */
@@ -56,6 +58,9 @@ class PetController extends Controller
         $pet->user_id = Auth::id();
         $pet->save();
 
+        // Utilizo el trait:
+        $this->storeLog($request, 'createdUser');
+
         return redirect(route('pets.show', $pet->id))->with('success', 'mascota registrada correctamente');
     }
     /**
@@ -87,7 +92,8 @@ class PetController extends Controller
      */
     public function edit(string $id)
     {
-            //
+       $pet = Pet::find($id);
+       return view('pets.edit', compact('pet'));
     }
     /**
      * Update the specified resource in storage.
@@ -98,7 +104,7 @@ class PetController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified resource from storage. 
      */
     public function destroy(string $id)
     {

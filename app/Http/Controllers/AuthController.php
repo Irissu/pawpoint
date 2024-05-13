@@ -10,15 +10,16 @@ use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
-        
+    public function register(Request $request)
+    {
+
         //validacion: 
         $rules =  [
             'id' => 'required|regex:/[0-9]{8}[A-Za-z]{1}/',
             'name' => 'required|min:3|max:50',
             'lastname' => 'required|min:3|max:50',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8', 
+            'password' => 'required|min:8',
             'type_id' => 'required'
         ];
         $error_messages = [
@@ -36,7 +37,7 @@ class AuthController extends Controller
         ];
         // se validan los datos del formulario, si no son correctos, validate lanza una excepcion y se redirige a la pagina anterior con los errores almacenados en la variable $errors
         $request->validate($rules, $error_messages);
-         
+
         // si ha pasado la validacion, se crea el usuario
         $user = new User();
         $user->id = $request->id;
@@ -53,11 +54,12 @@ class AuthController extends Controller
         return redirect(route('home')); //podria redirigir al perfil privado del usuario "privada"
     }
 
-    public function login (Request $request){
+    public function login(Request $request)
+    {
 
         $rules =  [
             'email' => 'required|email',
-            'password' => 'required', 
+            'password' => 'required',
         ];
 
         $error_messages = [
@@ -78,7 +80,7 @@ class AuthController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()
-            ->withErrors($validator->errors());
+                ->withErrors($validator->errors());
         }
         if (Auth::attempt($credentials)) {
             return redirect(route('home'));
@@ -88,7 +90,8 @@ class AuthController extends Controller
         return redirect()->back()->withErrors(['email' => 'credenciales incorrectas']);
     }
 
-    public function logout(Request $request) {
+    public function logout(Request $request)
+    {
         Auth::logout();
 
         //recomendabler resetear la sesion para evitar que quede algun dato guardado:
@@ -97,5 +100,4 @@ class AuthController extends Controller
 
         return redirect(route('login'));
     }
-
 }

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -132,4 +133,16 @@ class UserController extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
+
+
+    public function giveMeAnAvatar() {
+        $response = Http::get('https://randomuser.me/api/');
+        $userImage = $response->json();
+
+        $avatarUrl = $userImage['results'][0]['picture']['medium'];
+
+        return $avatarUrl;
+
+    }
+    
 }

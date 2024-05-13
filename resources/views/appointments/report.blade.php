@@ -1,7 +1,7 @@
 
 <div class="table my-5">
     <h1>Resumen de Citas</h1>
-<table class="table-responsive-xl">
+<table class="table-responsive-xl table-striped table-bordered" style="border: 1px solid black">
   <thead>
     <tr>
       <th scope="col">Día</th>
@@ -11,16 +11,16 @@
   </thead>
   <tbody class="table-group-divider">
     @foreach ($appointments as $appointment)
-        <tr>
-            <td>{{ $appointment->appointment_date }}]</td>
+        <tr >
+            <td style="border: 1px solid black">{{ $appointment->appointment_date }}]</td>
             @if ($appointment->status == 'pending')
-                <td class="bg-warning " style="padding: 10px">{{ $appointment->status }}</td>
+                <td style="padding: 10px; background-color:#CCCCC0">{{ $appointment->status }}</td>
             @elseif ($appointment->status == 'completed')
-                <td class="bg-success" style="padding: 10px">{{ $appointment->status }}</td>
+                <td class="bg-success" style="padding: 10px; background-color:#20D779">{{ $appointment->status }}</td>
             @else
-                <td class="bg-danger" style="padding: 10px">{{ $appointment->status }}</td>
+                <td class="bg-danger" style="padding: 10px; background-color:#F9183D">{{ $appointment->status }}</td>
             @endif
-            <td style="padding: 10px">{{ $appointment->description }}</td>
+            <td style="padding: 10px; border:1px solid black">{{ $appointment->description }}</td>
         </tr>
         @endforeach
 
