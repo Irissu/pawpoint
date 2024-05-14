@@ -53,7 +53,7 @@
 <div class="container">
     <div class="row m-5 no-gutters shadow-lg form-base">
         <div class="col-md-4 d-none d-md-block p-0">
-            <img src="/../pawpoint/public/assets/cat-and-dog-big.jpg" class="img-fluid pet-form rounded-start" style="min-height:100%;" />
+            <img src="../assets/cat-and-dog-big.jpg" class="img-fluid pet-form rounded-start" style="min-height:100%;" />
         </div>
         <div class="col-md-8 bg-white p-5">
 
@@ -71,19 +71,19 @@
                     </div>
                     @endif
                     <div class="form-group pb-3 inputs">
-                        <input type="text" name="id" placeholder="DNI" class="form-control" id="dniInput" required>
+                        <input type="text" name="id" placeholder="DNI" class="form-control" id="dniInput" value="{{ old('id') }}" required>
                     </div>
 
                     <div class="form-group pb-3 inputs">
-                        <input type="text" name="name" placeholder="Nombre" class="form-control" id="nameInput" required>
+                        <input type="text" name="name" placeholder="Nombre" class="form-control" id="nameInput" value="{{ old('name') }}"  required>
                     </div>
 
                     <div class="form-group pb-3 inputs">
-                        <input type="text" name="lastname" placeholder="Apellido" class="form-control" id="surnameInput" required>
+                        <input type="text" name="lastname" placeholder="Apellido" class="form-control" id="surnameInput" value="{{ old('lastname') }}" required>
                     </div>
 
                     <div class="form-group pb-3 inputs">
-                        <input type="email" name="email" placeholder="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                        <input type="email" name="email" placeholder="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ old('email') }}" required>
                     </div>
 
                     <div class="form-group pb-3 inputs">

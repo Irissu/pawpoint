@@ -134,11 +134,11 @@
     <main class="form-signin w-100 m-auto">
         <form class="shadow p-3 mb-5 bg-white rounded text-center" method="post" action="{{ route('logins')}}">
             @csrf
-            <img class="mb-4" src="/../pawpoint/public/assets/logo-paw-color3.svg" alt="" width="112" height="112">
+            <img class="mb-4" src="../assets/logo-paw-color3.svg" alt="" width="112" height="112">
             <h1 class="h3 mb-3 fw-normal">Login</h1>
 
             <div class="form-floating">
-                <input type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <input type="email" name="email" class="form-control" value="{{ old('email') }}" id="floatingInput" placeholder="name@example.com" >
                 <label for="floatingInput">Email</label>
             </div>
             
@@ -147,12 +147,12 @@
                 <label for="floatingPassword">Password</label>
             </div>
         
-            <div class="form-check text-start my-3">
+ <!--            <div class="form-check text-start my-3">
                 <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
                 <label class="form-check-label" for="flexCheckDefault">
                     Recordarme
                 </label>
-            </div>
+            </div> -->
             @if($errors->any())
             <div class="alert alert-danger">
                 <ul>

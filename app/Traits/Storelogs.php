@@ -11,16 +11,7 @@ trait Storelogs
 {
     public function storeLog(Request $request, $typeOfLog)
     {
-        /*    IGNORAR: 
-                if (Auth::check()) {
-                $user = Auth::user();
-                Log::info('User activity logged:', [
-                    'user_id' => $user->id,
-                    'email' => $user->email,
-                    'route' => $request->path(),
-                    'method' => $request->method()
-                ]);
-            } */
+
         switch ($typeOfLog) {
             case 'info':
                 Log::info('Info: ', [
@@ -54,7 +45,7 @@ trait Storelogs
         }
     }
 
-    public function storeLogLogged(Request $request, $typeOfLog) {
+    public function storeLogLogged($typeOfLog) {
             if (Auth::check()) {
 
                 switch( $typeOfLog) {

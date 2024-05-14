@@ -88,7 +88,7 @@ class PetController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource. 
      */
     public function edit(string $id)
     {
@@ -100,7 +100,32 @@ class PetController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $rules = [
+            'name' => 'required|min:3|max:50',
+            'weight' => 'required|numeric|between:0,99',
+            'type' => 'required|in:dog,cat',
+            'breed' => 'required',
+            'age' => 'required|numeric|integer|min:1'
+        ];
+        $error_messages = [
+            'name' => 'El nombre debe tener al  menos 3 letras',
+            'weight' => 'El peso debe ser un numero de 0 a 45',
+            'type' => 'Debes escoger un tipo de mascota',
+            'breed' => 'La raza debe contener al menos 3 letras',
+            'age' => 'La edad debe ser un número mayor a 0'
+        ];
+        
+        $request->validate($rules, $error_messages);
+
+        $pet = Pet::find($id); 
+        $pet->name = $request->name;
+        $pet->weight = $request->weight;
+        $pet->type = $request->type;
+        $pet->breed = $request->breed;
+        $pet->age = $request->age;
+        $pet->save();
+
+        return redirect()->route('pets.show', compact('pet'))->with('success', 'Mascota actualizada.');
     }
 
     /**

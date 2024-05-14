@@ -10,6 +10,9 @@
         <div class="col-12 col-sm-10 col-lg-6 mx-auto">
             <div class="bg-white p-5 shadow rounded">
                 <h1>Mascota: {{ $appointment->pet->name }}</h1>
+                @if (session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                 @endif
                 <p><strong>Tipo:</strong>@if($appointment->pet->type == 'dog') 
                     Perro
                         @else

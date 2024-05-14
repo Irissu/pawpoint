@@ -64,7 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checkvet' => \App\Http\Middleware\CheckVet::class,
-        'checkowner' => \App\Http\Middleware\CheckOwner::class
+        'checkowner' => \App\Http\Middleware\CheckOwner::class,
+        'authjwt' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
     ];
 }
 

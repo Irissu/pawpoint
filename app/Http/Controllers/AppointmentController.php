@@ -80,7 +80,23 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $rules = [
+            'status' => 'required',
+            'description' => 'max:500'
+        ];
+
+        $error_messages = [
+            'status' => 'El estado de la cita es obligatorio',
+            'description' => 'La descripción no puede tener más de 500 caracteres'
+        ];
+
+        $request->validate($rules, $error_messages);
+
+        $appointment = Appointment::find($id);
+        $appointment->description = $request->description;
+        $appointment->status = $request->status;
+        $appointment->save();
+        return redirect()->route('appointments.show', compact('appointment'))->with('success', 'La cita ha sido actualizada.');
     }
 
     /**
@@ -106,6 +122,7 @@ class AppointmentController extends Controller
 
         // Obtengo las citas del usuario, donde appointments esta asociada con 
         // mascotas, que a su vez estan asociadas con usuarios.
+
      /*    $appointments = Appointment::whereHas('pet', function($query) use ($user) {
             $query->where('user_id', $user->id);
         })->get(); */

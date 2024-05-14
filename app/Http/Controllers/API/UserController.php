@@ -8,12 +8,24 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    public function login(Request $request) {
+        $credentials = $request->only('email', 'password');
+
+        if ($token = JWTAuth::attempt($credentials)) {
+            return response()->json(['token' => $token]);
+        }
+
+        return response()->json(['error' => 'Unauthorized'], 401);
+    }
+
     public function index()
     {
         $users = User::all();
@@ -130,8 +142,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+
         $user->delete();
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Usuario eliminado con exito'], 204);
+        
     }
 
 

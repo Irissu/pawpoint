@@ -79,15 +79,17 @@ class AuthController extends Controller
         // $request->validate($rules, $error_messages);
 
         if ($validator->fails()) {
-            return redirect()->back()
-                ->withErrors($validator->errors());
+            return redirect()->back()->withInput($request->all())
+                ->withErrors($validator->errors()); // devuelve los errores de validacion en 'errors'
         }
         if (Auth::attempt($credentials)) {
             return redirect(route('home'));
         }
 
         // si falla autenticacion redirijo con mensaje
-        return redirect()->back()->withErrors(['email' => 'credenciales incorrectas']);
+         return redirect()->back()->withErrors(['email' => 'credenciales incorrectas']); 
+        
+       
     }
 
     public function logout(Request $request)

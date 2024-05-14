@@ -1,4 +1,4 @@
-<!--HEADER-->
+<!--HEADER--> 
 <header>
   <div class="container-fluid d-flex align-items-center justify-content-between px-4 py-1" style="background-color: rgb(26, 188, 156);">
     <nav class="navbar navbar-expand-lg" data-bs-theme="dark">
